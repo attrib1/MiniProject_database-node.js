@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  form(action='/admin/insert' , method='post', enctype="multipart/form-data")
+     p  Title : 
+         input(name='title',placeholder='title')
+     p  description :
+          div 
+            textarea(name="desc", cols="40", rows="5")
+     p  img : 
+         input(name='nimg1',type='file') 
+          
+     input(type='submit',value='Sumit')
+  
+
+  
+  div 
+    table
+        thead
+            tr: th Posth
+              tbody
+                  - var i =1;
+                  each item in topic
+                      tr
+                        td= i
+                        td: a(href='/admin/#{item.id_topic}')= item.title_topic.substr(0, 50)
+                        -i++
+
