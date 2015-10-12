@@ -55,7 +55,20 @@ var mysql   = require('mysql');
     }
 
     
+ this.Topicpublic = function(callback){
     
+    var sql = "select * from topic";
+     
+  	db.query(sql,function(err_query,data){
+
+			if(err_query) console.log(err_query);
+			
+			callback(err_query,data);
+
+		});
+    
+
+}//end selectTopic androdi
 this.selectTopic = function(callback){
     
     var sql = "select id_topic,title_topic from topic";
@@ -84,7 +97,60 @@ this.insertTopic = function(title,desc,nimg,callback){
 
 }//end insertTopic 
 
+this.delTopic = function(id,callback){
+    var sql = "delete from topic where id_topic = '"+id+"'";
+ 
+    db.query(sql,function(err){
+        
+        if(err) console.log(err);
+      
+        callback(err);    
     
+    });
+
+}//end del Topic
+
+this.editTopic = function(id,title,desc,nimg,callback){
+    var sql = "update topic set title_topic = '"+title+"',des_topic = '"+desc+"',pic_topic = '"+nimg+"' where id_topic = '"+id+"'";
+    db.query(sql,function(err){
+        if(err) console.log(err);
+        
+       callback(err);
+    
+    });
+}//class edit topic
+
+this.selectPictopic = function(id,callback){
+    
+    var sql = "select pic_topic from topic where id_topic = '"+id+"'";
+     
+  	db.query(sql,function(err_query,data){
+
+			if(err_query) console.log(err_query);
+			
+       // console.log("[] "+data[0].pic_topic);
+			callback(err_query,data);
+
+		});
+    
+
+}//end selectTopic
+    
+
+this.selectEditTopic = function(id,callback){
+    
+    var sql = "select * from topic where  id_topic = '"+id+"'";
+     
+  	db.query(sql,function(err_query,data){
+
+			if(err_query) console.log(err_query);
+			
+			callback(err_query,data);
+
+		});
+    
+
+}//end selectTopic
 
 }//end Users
 

@@ -1,0 +1,47 @@
+extends layout
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  div(class='form')
+      form(action='/admin/edit' , method='post', enctype="multipart/form-data")
+         input(type="hidden",name="hidden_id", value=data[0].id_topic)   
+         p  Title : 
+             input(name='title',placeholder='title' value=data[0].title_topic)
+         p  description :
+              div 
+                textarea(name="desc", cols="40", rows="5" )=data[0].des_topic
+         p  img : 
+             input(name='nimg1',type='file') 
+
+         input(type='submit',value='Sumit',style='margin: 1%;') 
+         input(type='reset',value='reset')
+  
+
+  
+    div(ng-controller='showdatacontroller')
+        
+        p ค้นหา : 
+             input(ng-model='sData',placeholder='ค้นหา',style='margin-bottom: 1%;')
+         table 
+            thead
+             tr: th Posth
+                  tbody(ng-repeat='item in showData | filter : sData')                             
+                    tr  
+                    td {{$index+1}}
+                    td(style='width:200px;') 
+                             |{{item.title_topic | limitTo:'50'}}
+                    td(style='margin-left: 5%;')
+                        a(href='/admin/edit/{{item.id_topic}} ') edit
+                    td(style='margin-left: 2%;') 
+                         a(href='/admin/del/{{item.id_topic}} ') del
+
+
+  //-- div(ng-app='Hello')
+    |{{ 'World' | sayhello }}
+    
+                     
+  script(type='text/javascript', src='/lib/angular/angular.min.js')
+  script(type='text/javascript', src='/application.js')

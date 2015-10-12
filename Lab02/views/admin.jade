@@ -1,31 +1,50 @@
 extends layout
 
 block content
+
   h1= title
   p Welcome to #{title}
   
-  form(action='/admin/insert' , method='post', enctype="multipart/form-data")
-     p  Title : 
-         input(name='title',placeholder='title')
-     p  description :
-          div 
-            textarea(name="desc", cols="40", rows="5")
-     p  img : 
-         input(name='nimg1',type='file') 
-          
-     input(type='submit',value='Sumit')
+  div(class="form-group")
+      form(name='myform',action='/admin/insert',method='post', enctype="multipart/form-data")
+         p  Title : 
+             input(type="text",class="form-control",name='title',placeholder='title',required)       
+         p  description :
+              div 
+                textarea(class="form-control",name="desc", cols="40", rows="5",required)
+         p  img : 
+             input(name='nimg1',type='file',required) 
+
+         input(class="btn btn-success",type='submit',value='Sumit',style='margin: 1%;') 
+         input(class="btn btn-primary",type='reset',value='reset')
   
 
   
-  div 
-    table
-        thead
-            tr: th Posth
-              tbody
-                  - var i =1;
-                  each item in topic
-                      tr
-                        td= i
-                        td: a(href='/admin/#{item.id_topic}')= item.title_topic.substr(0, 50)
-                        -i++
+    div(ng-controller='showdatacontroller')
+        
+        p ค้นหา : 
+             input#seach-input(class="form-control",ng-model='sData',placeholder='ค้นหา',style='margin-bottom: 1%;')
+         table(class="table table-hover")
+            thead
+             tr: th Posth
+                  tbody(ng-repeat='item in showData | filter : sData')        
+                    tr  
+                    td(class="col-md-1") {{$index+1}}
+                    td(class="col-md-8")
+                             |{{item.title_topic | limitTo:'50'}}
+                    td(class="col-md-1")
+                        a(class='btn',href='/admin/edit/{{item.id_topic}} ') 
+                            span(class='glyphicon glyphicon-pencil') edit
+                    td(class="col-md-1")
+                        a(class='btn',href='/admin/del/{{item.id_topic}}',role="button") 
+                             span(class='glyphicon glyphicon-trash')
+   //- button(type='button' ,class='btn btn-default',onclick='myFunction()')=5
+  //-- div(ng-app='Hello')
+    |{{ 'World' | sayhello }}
 
+                     
+  script(type='text/javascript', src='/lib/angular/angular.min.js')
+  script(type='text/javascript', src='/application.js')
+  
+  script(type='text/javascript',src='/javascripts/jquery/dist/jquery.min.js')
+  script(type='text/javascript',src='/stylesheets/js/bootstrap.min.js')

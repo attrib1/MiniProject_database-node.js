@@ -69,6 +69,38 @@ router.post('/',function(req,res,next){
     
 
 });//end post '/login'
+
+router.get('/public', function (req, res, next) {
+
+    user.connect(function (err) {
+
+        user.Topicpublic(function (err_query, data) {
+
+          
+            res.json(data);
+  //console.log(data);
+
+        });
+
+
+    });
+
+}); //end 
+router.get('/public/:id', function (req, res, next) {
+var qid = req.params.id;
+      user.connect(function () {
+
+                        user.selectEditTopic(qid,function(err_query,data){
+                             if (err_query) return res.send(500, "Db query del topic's error");
+                            
+                                  res.json(data);
+          	                });
+                            
+                        
+                      
+
+                    }); //end connect edit topic
+}); //end 
             
 
 module.exports = router;
