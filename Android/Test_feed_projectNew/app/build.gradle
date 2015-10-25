@@ -26,4 +26,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.pnikosis:materialish-progress:1.7'
 }
