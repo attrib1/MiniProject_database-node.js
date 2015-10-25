@@ -2,6 +2,7 @@ package com.example.pena.test_feed_projectnew;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     private ListView mListView;
     private  Adapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
    getUrl Url = new getUrl();
 
     @Override
@@ -37,10 +39,24 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         mListView = (ListView)findViewById(R.id.listView);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         new SimpleTask().execute();
+        SwipeRefresh();
 
 
     }
+
+    private void SwipeRefresh() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new SimpleTask().execute();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
     private void showdata(String jsonString) {
       /*  Gson gson = new Gson();
         MyModel myModel = gson.fromJson(jsonString,MyModel.class);
