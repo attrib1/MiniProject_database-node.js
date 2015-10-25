@@ -7,12 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -153,11 +151,13 @@ public class MainActivity extends ActionBarActivity {
                 if (response.isSuccessful()) {
                     return response.body().string();
                 } else {
+                    Log.e("gooo","use net");
                     return "Not Success - code : " + response.code();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error - " + e.getMessage();
+                Log.e("connot ", "use net");
+                return "Error";
             }
         }
 
@@ -166,16 +166,14 @@ public class MainActivity extends ActionBarActivity {
             super.onPostExecute(s);
             layoutProgressLoading.setVisibility(View.GONE);
             layoutShowData.setVisibility(View.VISIBLE);
-            if (CheckNetConnect.isConnectingToInternet(getApplicationContext())) {
-                //Toast.makeText(getApplicationContext(), "ตอนนี้มีการเชื่อมต่ออินเตอร์เน็ตอยู่นะ / Internet Connection", Toast.LENGTH_SHORT).show();
+            if (s.equals("Error")){
+                Toast.makeText(getApplicationContext(), "ไม่สามารถติดต่อกับเซิฟเวอร์ได้ / can't connect to server", Toast.LENGTH_SHORT).show();
+            }else{
+                showdata(s);// if can connect will show data in layout
+            }
 
-                showdata(s);
 
-            } else {
-                Toast.makeText(getApplicationContext(), "ตอนนี้ไม่มีการเชื่อมต่ออินเตอร์เน็ต / No Internet connection", Toast.LENGTH_SHORT).show();
-
-            }//end CheckNetConnect  "if connect show data"
-        }
+        }//end onPostExecute
     }//end Asyncrask
 
 }//end class Main
