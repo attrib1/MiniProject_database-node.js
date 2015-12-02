@@ -62,8 +62,5 @@
     </RelativeLayout>
 
 </RelativeLayout>
-<<<<<<< HEAD
-</android.support.v4.widget.SwipeRefreshLayout>
-=======
 
->>>>>>> e54636407d81e535008104d15310dd7b4443d3d8
+</android.support.v4.widget.SwipeRefreshLayout>
