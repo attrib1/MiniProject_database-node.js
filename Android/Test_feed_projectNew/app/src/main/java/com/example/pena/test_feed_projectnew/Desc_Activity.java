@@ -92,7 +92,13 @@ public class Desc_Activity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            showdata(s);
+            layoutProgressLoading.setVisibility(View.GONE);
+            layoutShowData.setVisibility(View.VISIBLE);
+            if (s.equals("Error")){
+                Toast.makeText(getApplicationContext(), "ไม่สามารถติดต่อกับเซิฟเวอร์ได้ / can't connect to server", Toast.LENGTH_SHORT).show();
+            }else{
+                showdata(s);// if can connect will show data in layout
+            }
         }
     }//end Asyncrask
 
